@@ -30,7 +30,6 @@ export default function EmpresaCard({ empresas }) {
                 }' 
                 className="relative w-full"
             >
-                {/* MARCO PRINCIPAL DEL CARRUSEL */}
                 <div className="carousel relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-black/10">
                     <div className="carousel-body h-[450px] transition-opacity duration-300">
                         {empresas.map((emp) => (
@@ -57,7 +56,6 @@ export default function EmpresaCard({ empresas }) {
                         ))}
                     </div>
 
-                    {/* BOTONES DE NAVEGACIÓN */}
                     <button 
                         type="button" 
                         data-carousel-prev="#carousel-destacados"
@@ -75,7 +73,6 @@ export default function EmpresaCard({ empresas }) {
                     </button>
                 </div>
 
-                {/* MINIATURAS: SOLUCIÓN DE NITIDEZ DEFINITIVA */}
                 <div className="carousel-pagination flex justify-center gap-4 py-2 overflow-x-auto">
                     {empresas.map((emp, index) => (
                         <button
@@ -87,21 +84,17 @@ export default function EmpresaCard({ empresas }) {
                         >
                             <img 
                                 src={emp.imagen || 'https://via.placeholder.com/150'} 
-                                alt={emp.nombre}
-                                // USAMOS style PARA GANARLE AL INLINE STYLE DEL JS
-                                // Si la clase 'active' está presente (FlyonUI la pone en el padre), forzamos opacidad 1
                                 className="w-24 h-16 md:w-28 md:h-20 object-cover rounded-xl border-4 border-transparent 
                                            opacity-40 grayscale transition-all duration-300
-                                           [.active_&]:!opacity-100 [.active_&]:!grayscale-0 [.active_&]:border-blue-500 
-                                           [.active_&]:scale-105 shadow-lg"
-                                style={{ opacity: undefined }} // Esto limpia interferencias
+                                           carousel-active:!opacity-100 carousel-active:!grayscale-0 carousel-active:border-blue-500 
+                                           carousel-active:scale-105 shadow-lg" 
+                                alt={emp.nombre} 
                             />
                         </button>
                     ))}
                 </div>
             </div>
             
-            {/* ESTILO CSS ADICIONAL PARA ASEGURAR NITIDEZ */}
             <style dangerouslySetInnerHTML={{ __html: `
                 .carousel-pagination-item.active img {
                     opacity: 1 !important;

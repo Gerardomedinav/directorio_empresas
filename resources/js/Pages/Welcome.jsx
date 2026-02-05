@@ -11,9 +11,18 @@ export default function Welcome({ auth }) {
     const [listaCategorias, setListaCategorias] = useState([]);
     const [listaEmpresas, setListaEmpresas] = useState([]); 
 
+    // 1. CARGA DE DATOS Y FILTRADO POR PUBLICADO
     useEffect(() => {
+        // Cargar Categorías
         axios.get('/api/v1/categorias').then(res => setListaCategorias(res.data.data));
-        axios.get('/api/v1/empresas').then(res => setListaEmpresas(res.data.data || []));
+        
+        // Cargar Empresas y filtrar solo las publicadas
+        axios.get('/api/v1/empresas').then(res => {
+            const todasLasEmpresas = res.data.data || [];
+            // Filtramos por el campo 'publicado' según tu migración
+            const empresasPublicadas = todasLasEmpresas.filter(emp => emp.publicado == 1);
+            setListaEmpresas(empresasPublicadas);
+        });
     }, []);
 
     const slides = [
@@ -47,6 +56,7 @@ export default function Welcome({ auth }) {
             <GradientBackground backdropBlurAmount="xl" className="bg-white/10">
                 <div className="relative z-10 text-gray-900 font-sans selection:bg-blue-500 selection:text-white">
                     
+                    {/* NAVBAR */}
                     <nav className="bg-white/40 backdrop-blur-md border-b border-white/20 sticky top-0 z-50 shadow-sm overflow-hidden">
                         <ShineEffect />
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -92,7 +102,7 @@ export default function Welcome({ auth }) {
                         </div>
                     </header>
 
-                    {/* SECCIÓN EMPRESAS: Llamando al componente corregido */}
+                    {/* SECCIÓN EMPRESAS: Solo mostrará las que tengan publicado = 1 */}
                     <section className="py-24 bg-white/5 border-y border-white/10">
                         <div className="max-w-7xl mx-auto px-6">
                             <div className="text-center mb-12">
@@ -103,7 +113,9 @@ export default function Welcome({ auth }) {
                             {listaEmpresas.length > 0 ? (
                                 <EmpresaCard empresas={listaEmpresas} />
                             ) : (
-                                <div className="h-[400px] flex items-center justify-center text-gray-400">Cargando empresas...</div>
+                                <div className="h-[400px] flex items-center justify-center text-gray-400 italic">
+                                    No hay empresas destacadas publicadas actualmente.
+                                </div>
                             )}
                         </div>
                     </section>
