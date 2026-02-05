@@ -1,7 +1,7 @@
 # 📍 Directorio de Empresas Formosa
 
 Este sistema es una plataforma integral de vinculación empresarial desarrollada para conectar el sector productivo de la provincia de Formosa con el talento técnico local. Representa un hito en la digitalización regional, diseñado bajo estándares de escalabilidad y performance.
-
+![Captura del Sistema](./public/img/screenshot.png)
 ---
 
 ## 🛠️ Stack Tecnológico
