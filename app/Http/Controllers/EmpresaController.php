@@ -20,18 +20,13 @@ class EmpresaController extends Controller
     /**
      * Muestra la vista de detalle de una empresa específica
      */
-    public function show(Empresa $empresa)
-    {
-        // Validación de seguridad: solo mostrar si está publicada
-        if (!$empresa->publicado) {
-            abort(404);
-        }
-
-        // Sumar visita (usando el campo de tu migración)
-        $empresa->increment('visitas');
-
-        return Inertia::render('Empresas/Show', [
-            'empresa' => $empresa->load('categoria')
-        ]);
-    }
+public function show(Empresa $empresa)
+{
+    return Inertia::render('Empresas/Show', [
+        'empresa' => $empresa->load('categoria'),
+        'relacionadas' => Empresa::where('categoria_id', $empresa->categoria_id)->where('id', '!=', $empresa->id)->get(),
+        'categorias' => \App\Models\Categoria::all(), // Para el Navbar
+        'todas_las_empresas' => Empresa::where('publicado', 1)->get(['id', 'nombre', 'imagen']) // Para el buscador dinámico
+    ]);
+}
 }
