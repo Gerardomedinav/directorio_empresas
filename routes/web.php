@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/empresas/{empresa}', [EmpresaController::class, 'show'])->name('empresas.show');
+
+Route::get('/categorias/{categoria}', [EmpresaController::class, 'porCategoria'])->name('categorias.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

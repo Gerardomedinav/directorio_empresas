@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from '@inertiajs/react'; // Importamos Link de Inertia
 
 export default function EmpresaCard({ empresas }) {
     
@@ -30,7 +31,6 @@ export default function EmpresaCard({ empresas }) {
                 }' 
                 className="relative w-full"
             >
-                {/* MARCO PRINCIPAL DEL CARRUSEL */}
                 <div className="carousel relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 bg-black/10">
                     <div className="carousel-body h-[450px] transition-opacity duration-300">
                         {empresas.map((emp) => (
@@ -49,7 +49,16 @@ export default function EmpresaCard({ empresas }) {
                                             className="max-w-2xl text-left"
                                         >
                                             <h3 className="text-4xl font-black mb-2 drop-shadow-lg">{emp.nombre}</h3>
-                                            <p className="text-lg opacity-90 line-clamp-2 drop-shadow-md">{emp.descripcion}</p>
+                                            <p className="text-lg opacity-90 line-clamp-1 drop-shadow-md mb-4">{emp.descripcion}</p>
+                                            
+                                            {/* ENLACE VER EMPRESA */}
+                                            <Link 
+                                                href={`/empresas/${emp.id}`} 
+                                                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-lg hover:scale-105 active:scale-95 w-fit"
+                                            >
+                                                Ver empresa
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                            </Link>
                                         </motion.div>
                                     </div>
                                 </div>
@@ -58,24 +67,15 @@ export default function EmpresaCard({ empresas }) {
                     </div>
 
                     {/* BOTONES DE NAVEGACIÓN */}
-                    <button 
-                        type="button" 
-                        data-carousel-prev="#carousel-destacados"
-                        className="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 size-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/30 transition-all text-white"
-                    >
+                    <button type="button" data-carousel-prev="#carousel-destacados" className="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 size-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/30 transition-all text-white">
                         <span className="text-2xl">❮</span>
                     </button>
-
-                    <button 
-                        type="button" 
-                        data-carousel-next="#carousel-destacados"
-                        className="carousel-next absolute right-4 top-1/2 -translate-y-1/2 z-10 size-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/30 transition-all text-white"
-                    >
+                    <button type="button" data-carousel-next="#carousel-destacados" className="carousel-next absolute right-4 top-1/2 -translate-y-1/2 z-10 size-12 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/30 transition-all text-white">
                         <span className="text-2xl">❯</span>
                     </button>
                 </div>
 
-                {/* MINIATURAS: SOLUCIÓN DE NITIDEZ DEFINITIVA */}
+                {/* MINIATURAS */}
                 <div className="carousel-pagination flex justify-center gap-4 py-2 overflow-x-auto">
                     {empresas.map((emp, index) => (
                         <button
@@ -88,20 +88,14 @@ export default function EmpresaCard({ empresas }) {
                             <img 
                                 src={emp.imagen || 'https://via.placeholder.com/150'} 
                                 alt={emp.nombre}
-                                // USAMOS style PARA GANARLE AL INLINE STYLE DEL JS
-                                // Si la clase 'active' está presente (FlyonUI la pone en el padre), forzamos opacidad 1
-                                className="w-24 h-16 md:w-28 md:h-20 object-cover rounded-xl border-4 border-transparent 
-                                           opacity-40 grayscale transition-all duration-300
-                                           [.active_&]:!opacity-100 [.active_&]:!grayscale-0 [.active_&]:border-blue-500 
-                                           [.active_&]:scale-105 shadow-lg"
-                                style={{ opacity: undefined }} // Esto limpia interferencias
+                                className="w-24 h-16 md:w-28 md:h-20 object-cover rounded-xl border-4 border-transparent opacity-40 grayscale transition-all duration-300 [.active_&]:!opacity-100 [.active_&]:!grayscale-0 [.active_&]:border-blue-500 [.active_&]:scale-105 shadow-lg"
+                                style={{ opacity: undefined }}
                             />
                         </button>
                     ))}
                 </div>
             </div>
             
-            {/* ESTILO CSS ADICIONAL PARA ASEGURAR NITIDEZ */}
             <style dangerouslySetInnerHTML={{ __html: `
                 .carousel-pagination-item.active img {
                     opacity: 1 !important;

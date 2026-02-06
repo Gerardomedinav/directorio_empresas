@@ -13,18 +13,17 @@ class FrontController extends Controller
     /**
      * Devuelve todas las categorías para el consumo de la API.
      */
-    public function categorias(): JsonResponse
-    {
-        // Traemos las categorías de la DB
-        $categorias = Categoria::where('menu', 1) // Opcional: solo las del menú
-                        ->orderBy('orden', 'asc')
-                        ->get(['id', 'nombre', 'slug', 'icono']); // Seleccionamos solo los campos necesarios
+  public function categorias(): JsonResponse
+{
+    // Quitamos el where('menu', 1) para que traiga TODO
+    $categorias = Categoria::orderBy('orden', 'asc')
+                    ->get(['id', 'nombre', 'slug', 'icono']);
 
-        return response()->json([
-            'success' => true,
-            'data' => $categorias
-        ], 200);
-    }
+    return response()->json([
+        'success' => true,
+        'data' => $categorias
+    ], 200);
+}
 
     public function empresas()
 {
